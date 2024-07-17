@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Error page</title>
+        <style>
+            body {
+
+                font-family: Arial, sans-serif;
+                background-color: #d9edff;
+                margin: 50px;
+                padding: 0px;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                font-size: 30px;
+            }
+            header {
+                padding: 80px;
+            }
+            a {
+                background-color: #16537e;
+                padding: 30px;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+            header a:hover {
+                background-color: #4c9dd7;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Oops! Error has occurred. </h1>
+        <h2 th:text="${errorMessage}">Error message</h2>
+        <h3> Go back to Home Page </h3>
+        <a th:href="@{/home}">TODO LIST</a>
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Spring Security Example</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #d9edff;
+                margin: 0px;
+                padding: 0px;
+                display: flex;
+	            align-items: center;
+	            flex-direction: column;
+	            font-size: 30px;
+            }
+            h1 {
+                 padding: 50px;
+            }
+            .buttons  {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+            }
+            .buttons a {
+                background-color: #16537e;
+                padding: 30px;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                margin: 30px 30px;
+            }
+            input {
+                background-color: black;
+                padding: 20px;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 30px;
+            }
+
+            .buttons a:hover {
+                background-color: #4c9dd7;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+        <div class=buttons>
+            <a th:href="@{/todo-list}">TODO LIST</a>
+            <a th:href="@{/todo-editor}">ADD TODO</a>
+            <a th:href="@{/login}">LOG IN</a>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="LOG OUT"/>
+        </form>
+        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+    </body>
+</html>

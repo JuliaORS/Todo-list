@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>TODO Editor</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #d9edff;
+                margin: 0px;
+                padding: 0px;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                font-size: 30px;
+            }
+            header {
+                padding: 80px;
+            }
+            header a {
+                background-color: #16537e;
+                padding: 30px;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+            header a:hover {
+                background-color: #4c9dd7;
+            }
+            table {
+                background-color: white;
+                border-collapse: collapse;
+            }
+            table th, table td {
+                padding: 30px;
+                text-align: left;
+            }
+            table th {
+                background-color: #333333;
+                color: white;
+            }
+            table td {
+                background-color: white;
+            }
+            .form-input {
+                background-color: #f0f0f0;
+                border: none;
+                font-size: 30px;
+                padding: 20px;
+            }
+            .form-checkbox {
+                height: 40px;
+                width: 40px;
+            }
+            .submit-button {
+                background-color: #333333;
+                color: white;
+                padding: 30px 50px;
+                border: none;
+                cursor: pointer;
+                font-size: 30px;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a th:href="@{/home}">HOME</a>
+        </header>
+        <form th:action="@{/save-todo}" th:object="${todo}" th:value="${todo.id}" method="post">
+            <input type="hidden" name="id" th:value="${todo.id}" />
+            <table>
+                <thead>
+                <tr>
+                    <th colspan="2">TODO EDITOR</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>User</td>
+                    <td>
+                        <select th:field="*{user}" class="form-input">
+                            <option th:each="userItem : ${users}" th:value="${userItem.id}" th:text="${userItem.username}"
+                                    th:selected="${todo.user != null && userItem.id == todo.user.id}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Title</td>
+                    <td><input type="text" th:field="*{title}" class="form-input"></td>
+                </tr>
+                <tr>
+                    <td>Completed</td>
+                    <td><input type="checkbox" th:field="*{completed}" class="form-checkbox"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <button type="submit" class="submit-button">Save</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>
