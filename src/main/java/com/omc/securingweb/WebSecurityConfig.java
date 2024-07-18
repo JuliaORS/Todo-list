@@ -18,8 +18,8 @@ public class WebSecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 				.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/home", "/todo-list", "/todo-editor", "/save-todo").permitAll() // Publicly accessible endpoints
-				.requestMatchers("/edit-todo", "/delete-todo").authenticated() // Endpoints that require authentication
+				.requestMatchers("/", "/home", "/todo-list", "/todo-editor", "/save-todo").permitAll()
+				.requestMatchers("/edit-todo", "/delete-todo").authenticated()
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
@@ -27,7 +27,6 @@ public class WebSecurityConfig {
 					.permitAll()
 			)
 			.logout((logout) -> logout.permitAll());
-
 		return http.build();
 	}
 

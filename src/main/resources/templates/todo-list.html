@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Todo List</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TODO LIST</title>
+        <title>TODO List</title>
 
         <style>
             body {
@@ -57,7 +57,6 @@
             .form-filter button:hover {
                 background-color: #5c5c5c;
             }
-
             table th, table td {
                 padding: 30px 70px 30px 30px;
                 text-align: left;
@@ -87,18 +86,15 @@
             table a:hover {
                 background-color: #5c5c5c;
             }
-
             .arrow-icon {
                 display: inline-block;
                 width: 30px;
                 height: 30px;
                 border-radius: 5px;
             }
-
             .arrow-icon.desc::after {
                 content: '▲';
             }
-
             .arrow-icon.asc::after {
                 content: '▼';
             }
@@ -135,36 +131,35 @@
         </div>
         <table>
             <thead>
-            <tr>
-                <th class="sortable" data-sort-field="title">
-                    <div>
-                        <span>Title</span>
-                        <button class="sort-button" onclick="toggleSortDirection('title')">
-                            <span class="arrow-icon" id="arrow-icon-title"></span>
-                        </button>
-                    </div>
-                </th>
-                <th class="sortable" data-sort-field="user.username">
-                    <div>
-                        <span>Username</span>
-                        <button class="sort-button" onclick="toggleSortDirection('user.username')">
-                            <span class="arrow-icon" id="arrow-icon-user.username"></span>
-                        </button>
-                    </div>
-                </th>
-                <th class="sortable" data-sort-field="user.address.country">
-                    <div>
-                        <span>Country</span>
-                        <button class="sort-button" onclick="toggleSortDirection('user.address.country')">
-                            <span class="arrow-icon" id="arrow-icon-user.address.country"></span>
-                        </button>
-                    </div>
-                </th>
-                <th>Completed</th>
-                <th>Edition</th>
-                <th>Delete</th>
-            </tr>
-
+                <tr>
+                    <th data-sort-field="title">
+                        <div>
+                            <span>Title</span>
+                            <button onclick="toggleSortDirection('title')">
+                                <span class="arrow-icon" id="arrow-icon-title"></span>
+                            </button>
+                        </div>
+                    </th>
+                    <th data-sort-field="user.username">
+                        <div>
+                            <span>Username</span>
+                            <button onclick="toggleSortDirection('user.username')">
+                                <span class="arrow-icon" id="arrow-icon-user.username"></span>
+                            </button>
+                        </div>
+                    </th>
+                    <th data-sort-field="user.address.country">
+                        <div>
+                            <span>Country</span>
+                            <button onclick="toggleSortDirection('user.address.country')">
+                                <span class="arrow-icon" id="arrow-icon-user.address.country"></span>
+                            </button>
+                        </div>
+                    </th>
+                    <th>Completed</th>
+                    <th>Edition</th>
+                    <th>Delete</th>
+                </tr>
             </thead>
             <tbody>
                 <tr th:each="todo : ${todos}">
@@ -183,33 +178,23 @@
                             <input type="hidden" name="id" th:value="${todo.id}" />
                             <button type="button" onclick="confirmDelete(this.form)">Delete</button>
                         </form>
-
                     </td>
                 </tr>
             </tbody>
         </table>
         <div class="pagination">
-            <a th:if="${currentPage > 0}" th:href="@{/todo-list(page=${currentPage - 1}, size=10)}">Prev</a>
-            <a th:href="@{/todo-list(page=${currentPage}, size=3)}" th:text="${currentPage + 1}" class="current-page">Page</a>
-            <a th:if="${currentPage < totalPages - 1}" th:href="@{/todo-list(page=${currentPage + 1}, size=10)}">Next</a>
+            <a th:if="${currentPage > 0}" th:href="@{/todo-list(page=${currentPage - 1})}">Prev</a>
+            <a th:href="@{/todo-list(page=${currentPage})}" th:text="${currentPage + 1}" class="current-page">Page</a>
+            <a th:if="${currentPage < totalPages - 1}" th:href="@{/todo-list(page=${currentPage + 1})}">Next</a>
         </div>
 
-
-        <!-- JavaScript function to toggle sort direction -->
         <script th:inline="javascript">
             document.addEventListener("DOMContentLoaded", function() {
                 var currentSortField = /*[[${sortField}]]*/ 'title'; // Default sort field
                 var currentSortDir = /*[[${sortDir}]]*/ 'asc'; // Default sort direction
 
                 // Set the initial state of the arrow icon based on the current sort direction
-                var arrowIcon = document.getElementById('arrow-icon-' + currentSortField);
-                if (arrowIcon) {
-                    if (currentSortDir === 'asc') {
-                        arrowIcon.classList.add('asc');
-                    } else {
-                        arrowIcon.classList.add('desc');
-                    }
-                }
+                setArrowIcon(currentSortField, currentSortDir);
 
                 // Ensure all arrow icons have a default state
                 document.querySelectorAll('.arrow-icon').forEach(function(icon) {
@@ -226,19 +211,18 @@
                 var newSortDir = currentSortField === field && currentSortDir === 'asc' ? 'desc' : 'asc';
                 var url = '/todo-list?sortField=' + field + '&sortDir=' + newSortDir;
 
-                // Update the arrow icon for the current field
-                var arrowIcon = document.getElementById('arrow-icon-' + currentSortField);
-                if (arrowIcon) {
-                    if (newSortDir === 'asc') {
-                        arrowIcon.classList.remove('desc');
-                        arrowIcon.classList.add('asc');
-                    } else {
-                        arrowIcon.classList.remove('asc');
-                        arrowIcon.classList.add('desc');
-                    }
-                }
+                // Update the arrow icon for the new sort field
+                setArrowIcon(field, newSortDir);
+
                 // Redirect to sorted URL
                 window.location.href = url;
+            }
+
+            function setArrowIcon(field, sortDir) {
+                var arrowIcon = document.getElementById('arrow-icon-' + field);
+                if (arrowIcon) {
+                    arrowIcon.classList.add(sortDir === 'asc' ? 'asc' : 'desc');
+                }
             }
 
             function confirmDelete(form) {

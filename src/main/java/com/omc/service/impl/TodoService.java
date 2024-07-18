@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -57,7 +56,6 @@ public class TodoService implements TodoServiceInterface {
 
     @Override
     public void saveTodo(Todo todo, long id) throws Exception {
-
         todo.setId(id);
         User user = userRepository.findById(todo.getUser().getId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
@@ -71,7 +69,6 @@ public class TodoService implements TodoServiceInterface {
         } else {
             todoRepository.save(todo);
         }
-
     }
 
     @Override

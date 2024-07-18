@@ -15,7 +15,6 @@ import java.util.List;
 public class TodoListApplication {
 
     public static void main(String[] args) {
-        //SpringApplication.run(TodoListApplication.class, args);
 
         ConfigurableApplicationContext context = SpringApplication.run(TodoListApplication.class, args);
 
@@ -47,6 +46,5 @@ public class TodoListApplication {
 
         todoRepository.saveAll(List.of(todo1, todo2, todo3, todo4, todo5, todo6, todo7, todo8, todo9, todo10, todo11, todo12));
     }
-
 }
 

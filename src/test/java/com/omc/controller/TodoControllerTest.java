@@ -12,10 +12,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -32,7 +36,6 @@ public class TodoControllerTest {
     @Autowired
     TodoService todoService;
     private MockMvc mockMvc;
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private User user;
     private Todo todo;
 
@@ -89,8 +92,8 @@ public class TodoControllerTest {
                         .param("title", "new title")
                         .param("user.id", String.valueOf(user.getId()))
                         .param("id", String.valueOf(todo.getId())))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/todo-list"));
+                .andExpect(status().isOk())
+                .andExpect(view().name("home"));
     }
 
     @Test
@@ -99,20 +102,44 @@ public class TodoControllerTest {
                         .param("title", "new title")
                         .param("user.id", "-1")
                         .param("id", "0"))
-                .andExpect(view().name("error"));
+                .andExpect(view().name("error-page"));
     }
 
     @Test
     public void editTodoTest() throws Exception {
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getName()).thenReturn(user.getUsername());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         mockMvc.perform(get("/edit-todo")
                         .param("id", String.valueOf(todo.getId())))
                 .andExpect(status().isOk())
                 .andExpect(view().name("todo-editor"));
     }
+
     @Test
     public void editTodoWrongIdTest() throws Exception {
         mockMvc.perform(get("/edit-todo")
                         .param("id", "-1"))
-                .andExpect(view().name("error"));
+                .andExpect(view().name("error-page"));
+    }
+
+    @Test
+    public void deleteTodoTest() throws Exception {
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getName()).thenReturn(user.getUsername());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        mockMvc.perform(post("/delete-todo")
+                        .param("id", String.valueOf(todo.getId())))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/todo-list"));
+    }
+
+    @Test
+    public void deleteTodoWrongIdTest() throws Exception {
+        mockMvc.perform(post("/delete-todo")
+                        .param("id", "-1"))
+                .andExpect(view().name("error-page"));
     }
 }

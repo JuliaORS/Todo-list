@@ -15,11 +15,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 public class TodoServiceTest {
@@ -126,11 +133,61 @@ public class TodoServiceTest {
     }
 
     @Test
-    public void editorTodoTest() {
+    public void saveTodoInvalidTitleTest() throws Exception {
+        Todo todo3 = new Todo("", user);
+
+        assertThrows(Exception.class, () -> {
+            todoService.saveTodo(todo3, todo3.getId());});
+    }
+
+    @Test
+    public void editTodoTest() {
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getName()).thenReturn(user.getUsername());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         Map<String, Object> dataEditorMap = todoService.editTodo(todo.getId());
         assertInstanceOf(Todo.class, dataEditorMap.get("todo"));
         Todo todo2 = (Todo)dataEditorMap.get("todo");
         assertTrue(dataEditorMap.get("users") instanceof List<?>);
+    }
+
+    @Test
+    public void editTodoUnauthorizedUserTest() throws Exception {
+        Optional<User> optionalUser = userRepository.findByUsername("julia11");
+        if (optionalUser.isPresent()) {
+            User user3 = optionalUser.get();
+            Authentication authentication = mock(Authentication.class);
+            when(authentication.getName()).thenReturn(user3.getUsername());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        assertThrows(Exception.class, () -> {
+            todoService.editTodo(todo.getId());});
+    }
+
+    @Test
+    public void deleteTodoTest() throws Exception {
+        int sizeRepo = todoRepository.findAll().size();
+
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getName()).thenReturn(user.getUsername());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        todoService.deleteTodo(todo.getId());
+        assertEquals(sizeRepo - 1, todoRepository.findAll().size());
+    }
+
+    @Test
+    public void deleteTodoUnauthorizedUserTest() throws Exception {
+        Optional<User> optionalUser = userRepository.findByUsername("julia11");
+        if (optionalUser.isPresent()) {
+            User user3 = optionalUser.get();
+            Authentication authentication = mock(Authentication.class);
+            when(authentication.getName()).thenReturn(user3.getUsername());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        assertThrows(Exception.class, () -> {
+            todoService.deleteTodo(todo.getId());});
     }
 }
 

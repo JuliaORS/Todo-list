@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
@@ -48,7 +49,11 @@ public class TodoController implements TodoControllerInterface {
 
     @Override
     @PostMapping("/save-todo")
-    public String saveTodo(@Valid @ModelAttribute Todo todo, long id, Model model) {
+    public String saveTodo(@Valid @ModelAttribute Todo todo, BindingResult bindingResult, long id, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errorMessage", "Title size must be between 1 and 200.");
+            return "error-page";
+        }
         try {
             todoService.saveTodo(todo, id);
             return "home";

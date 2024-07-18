@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
-        <title>Spring Security Example</title>
+        <title>Home</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -55,6 +55,5 @@
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="LOG OUT"/>
         </form>
-        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
     </body>
 </html>
