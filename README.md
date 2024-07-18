@@ -4,9 +4,9 @@
 This application is designed to manage todo lists for users. It allows users to create, edit, and delete their tasks efficiently.
 
 ### Features
-    Create Todo: Users can create new todo items.
-    Edit Todo: Modify existing todo items (restricted to owner).
-    Delete Todo: Remove todo items that are no longer needed (restricted to owner).
+- Create Todo: Users can create new todo items.
+- Edit Todo: Modify existing todo items (restricted to owner).
+- Delete Todo: Remove todo items that are no longer needed (restricted to owner).
     Mark Todo as Completed: Users can mark tasks as completed when they are finished.
     View Todo List: Easily view all todo items in a list format.
     Filter Todo: By username (exact match) or by title could conatin (containing).
