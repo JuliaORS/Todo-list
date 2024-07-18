@@ -7,11 +7,11 @@ This application is designed to manage todo lists for users. It allows users to 
 - Create Todo: Users can create new todo items.
 - Edit Todo: Modify existing todo items (restricted to owner).
 - Delete Todo: Remove todo items that are no longer needed (restricted to owner).
-    Mark Todo as Completed: Users can mark tasks as completed when they are finished.
-    View Todo List: Easily view all todo items in a list format.
-    Filter Todo: By username (exact match) or by title could conatin (containing).
-    Sort Todo:  Tasks can be sorted alphabetically by title, username, or country.
-    Pagination: The list displays 10 records per page and includes navigation method to move between pages.
+- Mark Todo as Completed: Users can mark tasks as completed when they are finished.
+- View Todo List: Easily view all todo items in a list format.
+- Filter Todo: By username (exact match) or by title could conatin (containing).
+- Sort Todo:  Tasks can be sorted alphabetically by title, username, or country.
+- Pagination: The list displays 10 records per page and includes navigation method to move between pages.
 
 ## Setup
 ### 1 - Prerequisites
