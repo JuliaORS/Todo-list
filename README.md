@@ -25,10 +25,10 @@ This application is designed to manage todo lists for users. It allows users to 
 ```
 ### 3 - Users
 The application includes pre-created users for login. You can use these credentials to log in to the application.
-    - Username: "julia01" - Password: "123456"
-    - Username: "john02" - Password: "78910"
-    - Username: "gina03" - Password: "34567"
-    - Username: "peter04" - Password: "34567"
+- Username: "julia01" - Password: "123456"
+- Username: "john02" - Password: "78910"
+- Username: "gina03" - Password: "34567"
+- Username: "peter04" - Password: "34567"
     
 ## Architecture of application
 Backend application built with Java and Spring Boot, featuring Spring Security for user management. The frontend is developed using Thymeleaf, HTML, CSS, and JavaScript. At the core of backend lies the concept of controllers, services, and repositories, orchestrated to deliver seamless communication between application and external entities.
