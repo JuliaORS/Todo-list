@@ -14,16 +14,60 @@ This application is designed to manage todo lists for users. It allows users to 
 - Pagination: The list displays 10 records per page and includes navigation method to move between pages.
 
 ## Setup
-### 1 - Prerequisites
-- IntelliJ IDEA [Download IntelliJ IDEA](https://java.tutorials24x7.com/blog/how-to-install-java-17-on-windows)
-- Maven [Download Maven](https://maven.apache.org/download.cgi)
-- Postman or other client-rest.
+### OPTION 1 - Docker
+#### Prerequisites
+- Docker desktop [Download Docker Desktop](https://docs.docker.com/engine/install/)
 
-### 2 - Clone repo
+#### Getting started
+##### 1. Clone the Repository
 ```
   git clone https://github.com/JuliaORS/Todo-list.git
 ```
-### 3 - Users
+##### 3. Build and Start the Containers
+You must be inside the Project Directory.
+```
+  docker-compose up --build
+```
+##### 4. Access the Application via your web browser
+```
+  http://localhost:8080
+```
+
+### OPTION 2
+#### Prerequisites
+- Java Development Kit (JDK) - Version: Java JDK 17 or compatible [Download Java](https://www.oracle.com/java/technologies/downloads/?er=221886)  
+- Apache Maven - Maven 3.8.5 or a compatible [Download Maven](https://maven.apache.org/download.cgi)
+- MySQL - Version 8.0 [Download Mysql](https://dev.mysql.com/downloads/mysql/)
+
+#### Getting started
+##### 1. Clone the Repository
+```
+  git clone https://github.com/JuliaORS/Todo-list.git
+```
+##### 2. Set Up MySQL Database
+```
+  CREATE DATABASE mydb;
+  CREATE USER 'root'@'localhost' IDENTIFIED BY 'rootpassword';
+  GRANT ALL PRIVILEGES ON mydb.* TO 'root'@'localhost';
+  FLUSH PRIVILEGES;
+```
+
+##### 3. Build the Application
+You must be inside the Project Directory.
+```
+  mvn clean package
+```
+##### 4. Run the Application
+You must be inside the Project Directory.
+```
+  java -jar target/your-app-name.jar
+```
+##### 5. Access the Application via your web browser
+```
+  http://localhost:8080
+```
+
+## Users Credentials
 The application includes pre-created users for login. You can use these credentials to log in to the application.
 - Username: "julia01" - Password: "123456"
 - Username: "john02" - Password: "78910"
