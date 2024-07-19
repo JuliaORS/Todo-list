@@ -33,6 +33,10 @@ Ensure Docker Desktop is running before proceeding.
 ```
   http://localhost:8080
 ```
+##### 5. Stop the application
+```
+  docker compose down
+```
 
 ### OPTION 2
 #### Prerequisites
