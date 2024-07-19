@@ -25,6 +25,7 @@ This application is designed to manage todo lists for users. It allows users to 
 ```
 ##### 3. Build and Start the Containers
 You must be inside the Project Directory.
+Ensure Docker Desktop is running before proceeding.
 ```
   docker-compose up --build
 ```
