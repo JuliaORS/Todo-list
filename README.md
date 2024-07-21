@@ -51,9 +51,9 @@ Ensure Docker Desktop is running before proceeding.
 ```
 ##### 2. Set Up MySQL Database
 ```
-  CREATE DATABASE mydb;
+  CREATE DATABASE app_db;
   CREATE USER 'root'@'localhost' IDENTIFIED BY 'rootpassword';
-  GRANT ALL PRIVILEGES ON mydb.* TO 'root'@'localhost';
+  GRANT ALL PRIVILEGES ON app_db.* TO 'root'@'localhost';
   FLUSH PRIVILEGES;
 ```
 
